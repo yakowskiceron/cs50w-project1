@@ -27,8 +27,8 @@ db = scoped_session(sessionmaker(bind=engine))
 @app.route("/")
 @login_required
 def index():
-    session.clear()
-    return render_template("login.html")
+    books = db.execute("SELECT * FROM books").fetchall()
+    return render_template("index.html", books=books)
 
 
 
@@ -114,3 +114,64 @@ def logout():
 
     # Redirect user to login form
     return redirect("/")
+
+@app.route("/busqueda", methods=["GET", "POST"])
+@login_required
+def busqueda():
+    if request.method == "POST":
+
+        if request.form.get("busqueda"):
+            rows = "%" + request.form.get("busqueda").title() + "%"
+            query = db.execute("SELECT isbn, title, author, year FROM books WHERE title LIKE :rows OR \
+                author LIKE :rows OR isbn Like :rows",{"rows": rows}).fetchall()
+            if query:
+                return render_template("busqueda.html", query = query)
+            else:
+                flash("No se encontro el libro deseado")
+                return render_template("index.html")
+
+        flash("Ingrese el nombre de un libro")
+        return apology("libro no encontrado",400)
+
+@app.route("/book/<string:isbn>", methods=["GET", "POST"])
+@login_required
+def book(isbn):
+    if request.method == "POST":
+        usuario = session["id"]
+
+        rating = int(request.form.get("rating"))
+        comment = ( request.form.get("reviews"))
+        
+        row = db.execute("SELECT * FROM reviews WHERE id_user = :user_id AND isbn = :isbn",{"user_id":session["id"], "isbn":isbn})
+
+        print(row)
+
+        if row.rowcount == 1:
+            flash("usted ya realizo un comentario a este libro")
+            return redirect("/book/"+isbn)
+        query = db.execute("INSERT INTO reviews (isbn,id_user,rating,comment,time) VALUES (:isbn,:user_id,:rating,:comment,now())",{"isbn":isbn, "user_id":usuario, "rating":rating, "comment":comment})
+        db.commit()
+        
+        flash("Su comentario se publico correctamente")
+        return redirect("/book/"+isbn)
+    else:
+        query = db.execute("SELECT isbn, title, author, year FROM books WHERE isbn = :isbn",{"isbn": isbn}).fetchall()
+        print(query)
+        review = db.execute("select users.username,reviews.comment, reviews.rating, to_char(reviews.time, 'DD Mon YYYY - HH24:MI:SS') as fecha from reviews inner join users on reviews.id_user = users.id_user where reviews.isbn = :isbn ORDER BY fecha DESC",{"isbn":isbn}).fetchall()
+        print("Esta es la consulta del rows",review)
+        contenido = request.get("https://www.googleapis.com/books/v1/volumes?q=isbn:"+isbn).json()
+        contenido = (contenido['items'][0])
+        contenido = contenido['volumeInfo']
+
+        print(contenido)
+        print("")
+        print(contenido['ratingsCount'])
+
+
+        
+        print("")
+        print(contenido['averageRating'])
+
+        imagen= contenido['imageLinks']
+        print(imagen['thumbnail'])
+    return render_template("book.html", query = query, review = review,imagen = imagen, contenido = contenido)

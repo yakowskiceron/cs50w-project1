@@ -1,28 +1,57 @@
+
 {% extends "layout.html" %}
 
 {% block title %}
-    Register
+    busqueda
 {% endblock %}
 
 {% block main %}
-    <div id=search>
-        <form id="myform">
-            <div class="input-field">
-                <input type="search" id="books">
-                <label for="search">Buscar libro</label>
-            </div>
-            <button class="btn btn-primary">Search </button>
+<head>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" rel="stylesheet"/>
+</head>
+<style>
+    table {
+      width: 80%;
+      border-collapse: collapse;
+    }
 
-        </form>
-    </div>
-
-    <div id="ressult">
-
-    </div>
-
-
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
-    <script src="busqueda.js"></script>
+    td, th{
+      border: 1px solid #9969BA;
+      text-align: left;
+      padding: 8px;
+    }
+    tr:nth-child(even){
+      background-color: #D2B0E8;
+    }
+  </style>
+    <body>
+        <div>
+        <div>
+            INFORMACION del libro
+            {% for books in query %}
+                {{books['title']}}
+            {%endfor%}
+        </div>
+        {% for books in query %}
+            <label>ISBN</label>  
+            <br>
+            <a href="/book/{{books['isbn']}}">{{books['isbn']}}
+            <br>
+            <label>TITULO</label>  
+            <br>
+            <a href="#">{{books['title']}}</a>
+            <br>
+            <label>AUTOR</label>  
+            <br>
+            {{books['author']}}
+            <br>
+            <label>AÑO</label>  
+            <br>
+            {{books['year']}}
+                
+        {%endfor%}
+        
+    
+        </div>
+</body>
 {% endblock %}
