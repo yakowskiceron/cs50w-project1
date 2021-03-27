@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block main %}
+    <div id=search>
+        <form id="myform">
+            <div class="input-field">
+                <input type="search" id="books">
+                <label for="search">Buscar libro</label>
+            </div>
+            <button class="btn btn-primary">Search </button>
+
+        </form>
+    </div>
+
+    <div id="ressult">
+
+    </div>
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <script src="busqueda.js"></script>
+{% endblock %}
