@@ -27,7 +27,7 @@
     <body>
         <div>
         <div>
-            INFORMACION del libro
+            COINCIDENCIAS DEL LIBRO
             {% for books in query %}
                 {{books['title']}}
             {%endfor%}
@@ -41,17 +41,11 @@
             <br>
             <a href="#">{{books['title']}}</a>
             <br>
-            <label>AUTOR</label>  
-            <br>
-            {{books['author']}}
-            <br>
-            <label>AÑO</label>  
-            <br>
-            {{books['year']}}
-                
+            
         {%endfor%}
         
     
+        
         </div>
 </body>
 {% endblock %}

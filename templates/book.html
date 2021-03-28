@@ -1,4 +1,3 @@
-
 {% extends "layout.html" %}
 
 {% block title %}
@@ -26,22 +25,22 @@
     <div>
         <form action="" method="POST">
             <div>
-                <div class="col-sm-5">
+                <center><div class="col-sm-5">
                     
                     <h5>Nº of Ratings: {{contenido['ratingsCount']}}</h5>
                     <h5>Average Rating: {{contenido['averageRating']}}</h5>
                     <h5>
                         <img src="{{imagen['thumbnail']}}" alt="">
                     </h5>
-                </div>
+                </div></center>
             </div>
-            <div class="form-group">
+            <center><div class="form-group">
                 <label for="comment">Comentario:</label>
-                <textarea class="form-control" rows="5" id="comment"></textarea>
+                <textarea class="form-control" rows="5" name="comment"></textarea>
                 <br>
                 <br>
                 <input class="btn btn-primary" type="submit" value="Commentar">
-              </div>
+              </div></center>
         <br>
         <span>rating</span>
         <select class="form-control" id="rating" name="rating" required>

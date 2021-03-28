@@ -1,4 +1,4 @@
-import os
+import os, requests
 
 
 
@@ -8,6 +8,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from helpers import login_required, apology
 from werkzeug.security import check_password_hash, generate_password_hash
+from tempfile import mkdtemp
 
 
 app = Flask(__name__)
@@ -137,12 +138,12 @@ def busqueda():
 @login_required
 def book(isbn):
     if request.method == "POST":
-        usuario = session["id"]
+        usuario = session["user_id"]
 
         rating = int(request.form.get("rating"))
-        comment = ( request.form.get("reviews"))
+        comment = ( request.form.get("comment"))
         
-        row = db.execute("SELECT * FROM reviews WHERE id_user = :user_id AND isbn = :isbn",{"user_id":session["id"], "isbn":isbn})
+        row = db.execute("SELECT * FROM reviews WHERE id_user = :user_id AND isbn = :isbn",{"user_id":session["user_id"], "isbn":isbn})
 
         print(row)
 
@@ -159,14 +160,25 @@ def book(isbn):
         print(query)
         review = db.execute("select users.username,reviews.comment, reviews.rating, to_char(reviews.time, 'DD Mon YYYY - HH24:MI:SS') as fecha from reviews inner join users on reviews.id_user = users.id_user where reviews.isbn = :isbn ORDER BY fecha DESC",{"isbn":isbn}).fetchall()
         print("Esta es la consulta del rows",review)
-        contenido = request.get("https://www.googleapis.com/books/v1/volumes?q=isbn:"+isbn).json()
-        contenido = (contenido['items'][0])
-        contenido = contenido['volumeInfo']
+        contenido = requests.get("https://www.googleapis.com/books/v1/volumes?q=isbn:"+isbn).json()
+
+        if int(contenido["totalItems"]) > 0:
+            contenido = contenido["items"][0]["volumeInfo"]
+        else:
+            contenido ={
+                "ratingsCount": "No disponible",
+                "averageRating": "Nada",
+                'imageLinks': {
+                    "thumbnail": "#"
+
+                }
+            }
+
+
 
         print(contenido)
         print("")
         print(contenido['ratingsCount'])
-
 
         
         print("")
