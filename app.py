@@ -187,3 +187,6 @@ def book(isbn):
         imagen= contenido['imageLinks']
         print(imagen['thumbnail'])
     return render_template("book.html", query = query, review = review,imagen = imagen, contenido = contenido)
+
+
+
