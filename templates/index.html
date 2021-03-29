@@ -6,10 +6,33 @@
 
 {% block main %}
     <head>
-        <body>
+        <style>
+            #forma{
+                margin-top: 30px;
+                margin-left: 47%;
+            }
+
+            #letra{
+                font-size: xx-large;
+                font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+                margin-bottom: 20px;
+                margin-top: 30px;
+                margin-left: 40%;
+                color: rgb(34, 145, 189);
+                text-shadow: black;
+                font-size:20 px;
+                text-shadow: 1px  0px 0px gray,
+                0px  1px 0px black,
+                -1px  0px 0px black,
+                0px -1px 0px black;
+                
+            }
+        </style>
+        <body style="background-image: url(https://i.guim.co.uk/img/media/d305370075686a053b46f5c0e6384e32b3c00f97/0_50_5231_3138/master/5231.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=878208abf6d919b7ca9948a523d9ff4e);">
     <form action="busqueda" method="post">
+        <label id="letra">BANGTAN LIBRARY</label>
         <input type="text" autofocus class="form-control" name="busqueda" placeholder="Books" type="text"/>
-        <button class="btn btn-primary" type="submit">Buscar</button>
+        <button id="forma" class="btn btn-primary" type="submit">Buscar</button>
     </form>
 </body>
 {% endblock %}

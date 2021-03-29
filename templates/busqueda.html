@@ -11,36 +11,69 @@
 </head>
 <style>
     table {
-      width: 80%;
-      border-collapse: collapse;
+            margin:auto;
+            font-size:25px;
+            border: 2px solid green;
+            border-collapse: collapse;
+            width: 70%;
     }
 
-    td, th{
-      border: 1px solid #9969BA;
-      text-align: left;
-      padding: 8px;
+    tr , td {
+        border: 2px solid palevioletred;
+        padding: 2px;
+        text-align: center;
+        background-color: rgb(182, 241, 236);
+        }
+
+    th {
+        background-color: peru;
+        border: 2px solid palevioletred;
+        text-align: center;
     }
-    tr:nth-child(even){
-      background-color: #D2B0E8;
+    #encabezado{
+      text-align: center;
+      font-size: xx-large;
+      font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+      margin: 20px;
+      color: rgb(59, 93, 248);
+      text-shadow: black;
     }
   </style>
-    <body>
+    <body style="background-image: url(https://i.guim.co.uk/img/media/d305370075686a053b46f5c0e6384e32b3c00f97/0_50_5231_3138/master/5231.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=878208abf6d919b7ca9948a523d9ff4e);">
         <div>
-        <div>
-            COINCIDENCIAS DEL LIBRO
-            {% for books in query %}
-                {{books['title']}}
-            {%endfor%}
+        <div id="encabezado">
+            COINCIDENCIAS DE LIBROS
+            
         </div>
+        <table>
+          <tr>
+            <th>ISBN</th>
+            <th>TITULO</th>
+            <th>AUTOR</th>
+            <th>AÑO</th>
+          </tr>
+        </table>
         {% for books in query %}
-            <label>ISBN</label>  
-            <br>
-            <a href="/book/{{books['isbn']}}">{{books['isbn']}}
-            <br>
-            <label>TITULO</label>  
-            <br>
-            <a href="#">{{books['title']}}</a>
-            <br>
+            <table>
+
+              <tr>
+                <td>
+                  <a href="/book/{{books['isbn']}}">{{books['isbn']}}</a>
+                </td>
+                <td>
+                  <label>{{books['title']}}</label>
+                </td>
+                <td>
+                  <label>{{books['author']}}</label>
+                </td>
+                <td>
+                  <label>{{books['year']}}</label>
+                </td>
+              </tr>
+            </table>
+
+            
+
             
         {%endfor%}
         

@@ -16,6 +16,30 @@
     div{
         position: static;
     }
+
+    table {
+            margin:auto;
+            font-size:25px;
+            border: 2px solid green;
+            border-collapse: collapse;
+            width: 70%;
+    }
+
+    tr , td {
+        border: 2px solid rgb(29, 11, 197);
+        padding: 2px;
+        text-align: center;
+        }
+
+    th {
+        background-color: rgb(63, 205, 134);
+        border: 2px solid rgb(0, 0, 0);
+        text-align: center;
+    }
+
+
+    
+
 </style>
 <body>
         {% for book in query %}
@@ -55,8 +79,39 @@
     <div class="reviews">
         <ul>
             {%for reviews in review%}
-            <li>{{reviews['id']}}, {{reviews['username']}}, {{reviews['comment']}} , {{reviews['rating']}} , {{reviews['fecha']}} , {{reviews['hora']}}</li>
-            {%endfor%}
+
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>USERNAME</th>
+                    <th>COMMENT</th>
+                    <th>RATING</th>
+                    <th>FECHA</th>
+                    
+                </tr>
+
+                <tr>
+                  <td>
+                    <label>{{reviews['id']}}</label>
+                  </td>
+                  <td>
+                    <label>{{reviews['username']}}</label>
+                  </td>
+                  <td>
+                    {{reviews['comment']}}
+                  </td>
+                  <td>
+                    {{reviews['rating']}}
+                  </td>
+                  <td>
+                    {{reviews['fecha']}}
+                  </td>
+                  
+                </tr>
+              </table>
+
+
+           {%endfor%}
         </ul>
     </div>
 </body>
