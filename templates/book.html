@@ -43,7 +43,29 @@
 </style>
 <body>
         {% for book in query %}
-        {{book['isbn']}} <br> {{book['title']}} <br> {{book['author']}} <br>{{book['year']}}
+        Datos del libro
+        <br>
+        ISBN: 
+        {{book['isbn']}} 
+        <br>
+        Titulo:  
+        {{book['title']}} 
+        <br> 
+        Autor: 
+        {{book['author']}} 
+        <br>
+        Año: 
+        {{book['year']}}
+        <br>
+        <br>
+        Datos de google
+        
+        <br>
+        Cantidad de reseñas: 
+        {{contenido['ratingsCount']}}
+        <br>
+        Puntuacion promedio: 
+        {{contenido['averageRating']}}
     {%endfor%}
 
     <div>
@@ -114,5 +136,23 @@
            {%endfor%}
         </ul>
     </div>
+
+
+
+    <div>
+          
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+
 </body>
 {% endblock %}
